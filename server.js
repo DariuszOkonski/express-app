@@ -3,24 +3,32 @@ const path = require('path');
 
 const app = express();
 
+app.use((req, res, next) => {
+  res.show = (name) => {
+    res.sendFile(path.join(__dirname, `/views/${name}`));
+  };
+
+  next();
+});
+
 app.get('/', (req, res) => {
-  return res.sendFile(path.join(__dirname, './views/index.html'));
+  return res.show('index.html');
 });
 
 app.get('/about', (req, res) => {
-  return res.sendFile(path.join(__dirname, './views/about.html'));
+  return res.show('about.html');
 });
 
 app.get('/contact', (req, res) => {
-  return res.sendFile(path.join(__dirname, './views/contact.html'));
+  return res.show('contact.html');
 });
 
 app.get('/info', (req, res) => {
-  return res.sendFile(path.join(__dirname, './views/info.html'));
+  return res.show('info.html');
 });
 
 app.get('/history', (req, res) => {
-  return res.sendFile(path.join(__dirname, './views/history.html'));
+  return res.show('history.html');
 });
 
 app.listen(8000, () => {
